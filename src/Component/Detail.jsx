@@ -5,6 +5,7 @@ const Detail = ({ products }) => {
   const [loading, setLoading] = useState(true);
   const [clickedImageId, setClickedImageId] = useState(null);
   const navigate = useNavigate();
+  
 
   useEffect(() => {
     if (products.length) setLoading(false);
@@ -16,10 +17,22 @@ const Detail = ({ products }) => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div
+        style={{
+          fontSize: "1.5rem",
+          color: "#555",
+          textAlign: "center",
+          marginTop: "50px",
+        }}
+      >
+        Loading...
+      </div>
+    );
   }
 
   return (
+    
     <div style={{ background: "grey" }}>
       <div
         style={{
@@ -39,6 +52,8 @@ const Detail = ({ products }) => {
           justifyContent: "center",
           background: "lightblue",
           listStyleType: "none",
+          padding: "0",
+          margin: "0",
         }}
       >
         {products.map((product) => (
@@ -50,7 +65,7 @@ const Detail = ({ products }) => {
                 width: "150px",
                 height: "150px",
                 gap: "5px",
-                borderRadius: "50px",
+                borderRadius: "50%",
                 boxShadow: "0px 5px 30px 1px rgba(29, 18, 9, 1)",
                 transition: "transform 0.7s ease",
                 cursor: "pointer",

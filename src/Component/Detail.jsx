@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import "@fontsource/roboto";
 
 const Detail = ({ products }) => {
   const [loading, setLoading] = useState(true);
-  const [clickedImageId, setClickedImageId] = useState(null);
   const navigate = useNavigate();
-  
 
   useEffect(() => {
     if (products.length) setLoading(false);
   }, [products]);
 
   const handleImageClick = (id) => {
-    setClickedImageId((prevId) => (prevId === id ? null : id));
     navigate(`/productdetail/${id}`);
   };
 
@@ -20,8 +18,8 @@ const Detail = ({ products }) => {
     return (
       <div
         style={{
-          fontSize: "1.5rem",
-          color: "#555",
+          fontSize: "24px",
+          color: "dimgray",
           textAlign: "center",
           marginTop: "50px",
         }}
@@ -32,64 +30,121 @@ const Detail = ({ products }) => {
   }
 
   return (
-    
-    <div style={{ background: "grey" }}>
+    <div
+      style={{
+        backgroundColor: "white",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        padding: "48px 0px",
+      }}
+    >
       <div
         style={{
-          color: "white",
           textAlign: "center",
-          marginTop: "10px",
-          background: "black",
-          padding: "13px",
+          padding: "15px",
+          fontSize: "20px",
+          fontWeight: "bold",
+          backgroundColor: "black",
+          color: "white",
+          marginBottom: "20px",
+          width: "100%",
+          fontFamily: "'Roboto', sans-serif",
         }}
       >
         CHOOSE YOUR FIT
       </div>
-      <ul
+      <div
         style={{
           display: "flex",
           flexWrap: "wrap",
           justifyContent: "center",
-          background: "lightblue",
-          listStyleType: "none",
-          padding: "0",
-          margin: "0",
+          gap: "30px",
+          maxWidth: "1124px",
+          width: "100%",
+          padding: "0 15px",
         }}
       >
         {products.map((product) => (
-          <li key={product.id} style={{ margin: "10px" }}>
-            <img
-              src={product.image}
-              alt={product.title}
-              style={{
-                width: "150px",
-                height: "150px",
-                gap: "5px",
-                borderRadius: "50%",
-                boxShadow: "0px 5px 30px 1px rgba(29, 18, 9, 1)",
-                transition: "transform 0.7s ease",
-                cursor: "pointer",
-                transform:
-                  clickedImageId === product.id ? "scale(1.1)" : "scale(1)",
-              }}
-              onClick={() => handleImageClick(product.id)}
-            />
+          <div
+            key={product.id}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              textAlign: "center",
+              fontFamily: "'Roboto', sans-serif",
+              color: "gray",
+              padding: "10px",
+              flex: "1 1 calc(25% - 30px)",
+              maxWidth: "calc(25% - 30px)",
+              boxSizing: "border-box",
+              backgroundColor: "transparent",
+            }}
+          >
             <div
               style={{
-                width: "100px",
-                marginTop: "5px",
-                padding: "8px",
-                textAlign: "center",
-                color: "brown",
-                fontSize: "10px",
-                fontWeight: "bold",
+                width: "100%",
+                height: "250px",
+                position: "relative",
+                overflow: "hidden",
+                backgroundColor: "lightgray",
+                border: "1px solid gainsboro",
+                boxSizing: "border-box",
               }}
             >
+              <img
+                src={product.image}
+                alt={product.title}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  transition: "transform 0.3s ease-in-out",
+                }}
+                onClick={() => handleImageClick(product.id)}
+              />
+            </div>
+            <div className="product-title-container" title={product.title}>
               {product.title}
             </div>
-          </li>
+            <div
+              style={{
+                fontSize: "16px",
+                fontWeight: "bold",
+                color: "green",
+                marginTop: "5px",
+                fontFamily: "'Roboto', sans-serif",
+              }}
+            >
+              ${product.price}
+            </div>
+          </div>
         ))}
-      </ul>
+      </div>
+      <style>
+        {`
+          .product-title-container {
+            font-size: 14px;
+            font-weight: bold;
+            color: black;
+            margin-top: 10px;
+            max-height: 20px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: wrap;
+            position: relative;
+            cursor: pointer;
+            transition: max-height 0.3s ease-in-out;
+          }
+
+          .product-title-container:hover {
+            max-height: 100px;
+            white-space: normal;
+            overflow: visible;
+          }
+        `}
+      </style>
     </div>
   );
 };

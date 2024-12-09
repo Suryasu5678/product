@@ -23,7 +23,7 @@ function ProductDetails({ products, addToCart }) {
     return (
       <div
         style={{
-          fontSize: "1.5rem",
+          fontSize: "24px",
           color: "#555",
           textAlign: "center",
           marginTop: "50px",
@@ -38,7 +38,7 @@ function ProductDetails({ products, addToCart }) {
     return (
       <div
         style={{
-          fontSize: "1.5rem",
+          fontSize: "24px",
           color: "red",
           textAlign: "center",
           marginTop: "50px",
@@ -57,97 +57,112 @@ function ProductDetails({ products, addToCart }) {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        backgroundImage:
-          "url('https://images.unsplash.com/photo-1685495856559-5d96a0e51acb?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8d2Vic2l0ZSUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        padding: "20px",
-        boxShadow: "50px 10px 50px rgba(0, 0, 0, 0.1)",
-
+        backgroundColor: "#828EF9",
+        padding: "40px",
         minHeight: "100vh",
       }}
     >
       <div
         style={{
-          maxWidth: "90%",
+          display: "flex",
+          maxWidth: "1200px",
           width: "100%",
-          textAlign: "center",
-          padding: "20px",
-          backgroundColor: "rgba(0, 0, 0, 0.7)",
-          borderRadius: "15px",
-          margin: "20px",
+          backgroundColor: "#FFFFFF",
+          borderRadius: "12px",
+          boxShadow: "0 4px 16px rgba(0, 0, 0, 0.1)",
+          overflow: "hidden",
         }}
       >
-        
-        <h1
-          style={{
-            fontSize: "2rem",
-            color: "white",
-            fontWeight: "bold",
-            marginBottom: "15px",
-            wordWrap: "break-word",
-          }}
-        >
-          {title}
-        </h1>
-        <p
-          style={{
-            fontSize: "1rem",
-            color: "yellow",
-            marginBottom: "20px",
-            lineHeight: "1.6",
-            wordWrap: "break-word",
-          }}
-        >
-          {description}
-        </p>
         <div
           style={{
-            marginBottom: "20px",
-            textAlign: "center",
+            flex: 1,
+            padding: "20px",
+            backgroundColor: "#fff",
+            display: "flex",
+            justifyContent: "center",
+            flex: "1 1 calc(25% - 30px)",
+            maxWidth: "calc(25% - 30px)",
+            alignItems: "center",
           }}
         >
           <img
             src={image}
             alt={title}
             style={{
-              width: "100%",
-              maxWidth: "350px",
-              height: "auto",
-              borderRadius: "10px",
-              boxShadow: "6px 10px 50px rgba(5, 0, 0, 0.1)",
+              width: "80%",
+              maxWidth: "380px",
+              height: "600px",
+              backgroundColor: "#828EF9",
             }}
           />
         </div>
-        <div style={{ marginTop: "10px" }}>
+        <div
+          style={{
+            flex: 2,
+            padding: "40px",
+            color: "#333",
+            fontFamily: "'Roboto', sans-serif",
+          }}
+        >
+          <h1
+            style={{
+              fontSize: "28px",
+              fontWeight: "bold",
+              color: "#2D3748",
+              marginBottom: "10px",
+              wordWrap: "break-word",
+            }}
+          >
+            {title}
+          </h1>
           <p
             style={{
-              fontSize: "1.5rem",
-              color: "lightgreen",
-              fontWeight: "bold",
+              fontSize: "16px",
+              color: "#4A5568",
+              lineHeight: "1.8",
               marginBottom: "20px",
+            }}
+          >
+            {description}
+          </p>
+          <p
+            style={{
+              fontSize: "20px",
+              fontWeight: "bold",
+              color: "#48BB78",
+              marginBottom: "30px",
             }}
           >
             Price: ${price}
           </p>
-          <button
-            onClick={handleAddToCart}
+          <div
             style={{
-              backgroundColor: "darkgreen",
-              color: "white",
-              border: "none",
-              padding: "12px 30px",
-              fontSize: "1rem",
-              borderRadius: "15px",
-              cursor: "pointer",
-              transition: "all 0.3s ease",
-              maxWidth: "200px",
-              width: "100%",
+              display: "flex",
+              justifyContent: "flex-end",
+              marginTop: "50%",
             }}
           >
-            Add to Cart
-          </button>
+            <button
+              onClick={handleAddToCart}
+              style={{
+                padding: "12px 24px",
+                fontSize: "16px",
+                fontWeight: "bold",
+                color: "white",
+                backgroundColor: "#828EF9",
+                borderRadius: "25px",
+                border: "none",
+                cursor: "pointer",
+                transition: "background-color 0.3s",
+                width: "100%",
+                maxWidth: "220px",
+              }}
+              onMouseOver={(e) => (e.target.style.backgroundColor = "#4A5568")}
+              onMouseOut={(e) => (e.target.style.backgroundColor = "#828EF9")}
+            >
+              Add to Cart
+            </button>
+          </div>
         </div>
       </div>
     </div>

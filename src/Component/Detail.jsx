@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "@fontsource/roboto";
 
+
 const Detail = ({ products }) => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ const Detail = ({ products }) => {
           textAlign: "center",
           marginTop: "50px",
         }}
-      >
+      >  
         Loading...
       </div>
     );

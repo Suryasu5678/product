@@ -1,12 +1,11 @@
-import { useState, useEffect } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useParams, useLocation } from "react-router-dom";
 
-function BikeDetails({ bikes }) {
+const BikeDetails = () => {
   const { id } = useParams();
   const location = useLocation();
-
-  const [bikeDetail, setBikeDetail] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [bikeDetail, setBikeDetail] = useState(location.state || null);
+  const [loading, setLoading] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
@@ -19,11 +18,25 @@ function BikeDetails({ bikes }) {
   }, []);
 
   useEffect(() => {
-    setLoading(true);
-    const bike = bikes.find((bike) => bike.id.toString() === id);
-    setBikeDetail(bike);
-    setLoading(false);
-  }, [id, bikes]);
+    if (!bikeDetail) {
+      setLoading(true);
+      const fetchBikeDetail = async () => {
+        try {
+          const response = await fetch(
+            `https://fakestoreapi.com/products/${id}`
+          );
+          const data = await response.json();
+          setBikeDetail(data);
+        } catch (error) {
+          console.error("Error fetching bike detail:", error);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchBikeDetail();
+    }
+  }, [id, bikeDetail]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -33,17 +46,17 @@ function BikeDetails({ bikes }) {
     return <div>Bike not found</div>;
   }
 
-  const { name, description, image } = bikeDetail;
+  const { title, description, image, gif } = bikeDetail;
 
   return (
     <div
       style={{
         textAlign: "center",
         marginTop: "50px",
-        padding: windowWidth < 768 ? "20px" : "50px", // Adjust padding based on screen size
+        padding: windowWidth < 768 ? "20px" : "50px",
       }}
     >
-      <h1 style={{ fontSize: windowWidth < 768 ? "24px" : "36px" }}>{name}</h1>
+      <h1 style={{ fontSize: windowWidth < 768 ? "24px" : "36px" }}>{title}</h1>
       <p
         style={{
           fontSize: windowWidth < 768 ? "14px" : "18px",
@@ -54,7 +67,7 @@ function BikeDetails({ bikes }) {
       </p>
       <img
         src={image}
-        alt={name}
+        alt={title}
         style={{
           width: windowWidth < 768 ? "80%" : "300px",
           height: "auto",
@@ -62,8 +75,20 @@ function BikeDetails({ bikes }) {
           transition: "transform 0.3s ease",
         }}
       />
+      <div style={{ marginTop: "20px" }}>
+        <h2>GIF Preview</h2>
+        <img
+          src={gif}
+          alt={`${title} GIF`}
+          style={{
+            width: windowWidth < 768 ? "80%" : "300px",
+            height: "auto",
+            borderRadius: "10px",
+          }}
+        />
+      </div>
     </div>
   );
-}
+};
 
 export default BikeDetails;

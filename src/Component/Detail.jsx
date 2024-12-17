@@ -1,15 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useGlobalState } from "./GlobalStateContext";
 import { useNavigate } from "react-router-dom";
-import "@fontsource/roboto";
-
-
-const Detail = ({ products }) => {
-  const [loading, setLoading] = useState(true);
+import Spinner from "./Spinner";
+const Detail = () => {
+  const { products, loading } = useGlobalState();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (products.length) setLoading(false);
-  }, [products]);
 
   const handleImageClick = (id) => {
     navigate(`/productdetail/${id}`);
@@ -17,15 +12,8 @@ const Detail = ({ products }) => {
 
   if (loading) {
     return (
-      <div
-        style={{
-          fontSize: "24px",
-          color: "dimgray",
-          textAlign: "center",
-          marginTop: "50px",
-        }}
-      >  
-        Loading...
+      <div className="pos-center">
+        <Spinner />
       </div>
     );
   }
@@ -33,121 +21,65 @@ const Detail = ({ products }) => {
   return (
     <div
       style={{
-        backgroundColor: "white",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        padding: "48px 0px",
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
+        gap: "20px",
+        justifyContent: "center",
+        padding: "20px",
+        background: "#71e7e0",
       }}
     >
-      <div
-        style={{
-          textAlign: "center",
-          padding: "15px",
-          fontSize: "20px",
-          fontWeight: "bold",
-          backgroundColor: "black",
-          color: "white",
-          marginBottom: "20px",
-          width: "100%",
-          fontFamily: "'Roboto', sans-serif",
-        }}
-      >
-        CHOOSE YOUR FIT
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "center",
-          gap: "30px",
-          maxWidth: "1124px",
-          width: "100%",
-          padding: "0 15px",
-        }}
-      >
-        {products.map((product) => (
-          <div
-            key={product.id}
+      {products.map((product) => (
+        <div
+          key={product.id}
+          style={{
+            textAlign: "center",
+            borderRadius: "8px",
+            boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+            overflow: "hidden",
+            backgroundColor: "black",
+            transition: "transform 0.3s ease, box-shadow 0.3s ease",
+          }}
+        >
+          <img
+            src={product.image}
+            alt={product.title}
             style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              textAlign: "center",
-              fontFamily: "'Roboto', sans-serif",
-              color: "gray",
-              padding: "10px",
-              flex: "1 1 calc(25% - 30px)",
-              maxWidth: "calc(25% - 30px)",
-              boxSizing: "border-box",
-              backgroundColor: "transparent",
+              width: "100%",
+              height: "250px",
+              objectFit: "cover",
+              cursor: "pointer",
+              borderBottom: "2px solid #f1f1f1",
+            }}
+            onClick={() => handleImageClick(product.id)}
+          />
+          <h3
+            style={{
+              margin: "10px 0",
+              fontSize: "18px",
+              fontWeight: "bold",
+              color: "white",
             }}
           >
-            <div
-              style={{
-                width: "100%",
-                height: "250px",
-                position: "relative",
-                overflow: "hidden",
-                backgroundColor: "lightgray",
-                border: "1px solid gainsboro",
-                boxSizing: "border-box",
-              }}
-            >
-              <img
-                src={product.image}
-                alt={product.title}
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  transition: "transform 0.3s ease-in-out",
-                }}
-                onClick={() => handleImageClick(product.id)}
-              />
-            </div>
-            <div className="product-title-container" title={product.title}>
-              {product.title}
-            </div>
-            <div
-              style={{
-                fontSize: "16px",
-                fontWeight: "bold",
-                color: "green",
-                marginTop: "5px",
-                fontFamily: "'Roboto', sans-serif",
-              }}
-            >
-              ${product.price}
-            </div>
-          </div>
-        ))}
-      </div>
-      <style>
-        {`
-          .product-title-container {
-            font-size: 14px;
-            font-weight: bold;
-            color: black;
-            margin-top: 10px;
-            max-height: 20px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: wrap;
-            position: relative;
-            cursor: pointer;
-            transition: max-height 0.3s ease-in-out;
-          }
-
-          .product-title-container:hover {
-            max-height: 100px;
-            white-space: normal;
-            overflow: visible;
-          }
-        `}
-      </style>
+            {product.title}
+          </h3>
+          <p
+            style={{
+              color: "#28a745",
+              fontSize: "16px",
+              fontWeight: "600",
+              marginBottom: "15px",
+            }}
+          >
+            ${product.price}
+          </p>
+        </div>
+      ))}
     </div>
   );
 };
+
+
+
 
 export default Detail;

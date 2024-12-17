@@ -1,5 +1,6 @@
 import React from "react";
 
+
 const NotFoundPage = () => {
   return (
     <div style={styles.container}>
@@ -22,22 +23,21 @@ const styles = {
     justifyContent: "center",
     height: "100vh",
     textAlign: "center",
-    backgroundColor: "green",
+    backgroundColor: "#f0f0f0",
   },
   header: {
     fontSize: "2rem",
-    color: "red",
-    paddingTop: "10px",
-    marginBottom: "30px",
+    color: "#333",
+    marginBottom: "20px",
   },
   gif: {
     maxWidth: "100%",
     height: "auto",
   },
   message: {
-    fontSize: "20px",
-    color: "yellow",
-    marginTop: "30px",
+    fontSize: "1.2rem",
+    color: "#666",
+    marginTop: "20px",
   },
 };
 
